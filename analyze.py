@@ -31,13 +31,12 @@ def calc_topic_size(bag_path: str, csv_path: str):
     total_data_size = 0
     while reader.has_next():
         (topic, data, stamp) = reader.read_next()
-        if topic != '/rosout':
-            data_size = len(data)
-            total_data_size += data_size
-            if topic in stat:
-                stat[topic] += data_size
-            else:
-                stat[topic] = data_size
+        data_size = len(data)
+        total_data_size += data_size
+        if topic in stat:
+            stat[topic] += data_size
+        else:
+            stat[topic] = data_size
     sorted_stat = sorted(stat.items(), key=lambda i: i[1], reverse=True)
 
     with open(csv_path, 'w') as f:
